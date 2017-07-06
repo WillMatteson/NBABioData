@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1494867812466.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C2F4B9CD",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1494867812466,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "8EF1F39B",
+        "caption" : "nbaMasterWorking",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=nbaMasterWorking&cache_key=8EF1F39B",
+        "displayedObservations" : 8624,
+        "environment" : "",
+        "object" : "nbaMasterWorking",
+        "preview" : 0,
+        "totalObservations" : 8624,
+        "variables" : 67
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

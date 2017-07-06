@@ -7,3 +7,5 @@ Data is then converted into a dataframe using Pandas and then a spreadsheet
 (The spreadsheet is not nessecary!)
 
 You can easily plug in your own endpoint (and modify URL parameters) and everything should work
+
+I have included an already scraped spreadsheet of sample data which I used for my project. 

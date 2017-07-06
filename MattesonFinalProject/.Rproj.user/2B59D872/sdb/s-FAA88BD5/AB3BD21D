@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "rm(list = setdiff(ls(), lsf.str()))\nlibrary(readxl)\nnba<- read_excel(\"~/Basketball/bballdata/Code/nbaMaster.xlsx\", range=\"A1:BP1480\", col_names = TRUE,na=\"\")\n#nbanew <- read_excel(\"~/Basketball/bballdata/Code/BBallR/nbaMasterWorking.xlsx\", range=\"A1:BO00\", col_names = TRUE,na=\"\")\n#dim(nbanew)\n#clear\n#attach(nbanew)\ndim(nba)\nattach(nba)\nsummary(nba)\nYear=as.factor(Year)\nWon=as.factor(Won)\nMVP=as.factor(MVP)\nPTS_RANK=as.factor(MVP)\n#relative<-apply(nba[,38:62])\n\n\nvariables<-colnames(nba)\nrank_stats<-c(variables[38],variables[42],variables[45],variables[48],variables[51:55],variables[59:62])\nraw_stats<-c(variables[10],variables[14],variables[17],variables[20],variables[23:27],variables[31:34])\nnames(nba)\nmvp <- glm(MVP ~ ., data=nba[,rank], family=binomial)\nmvp\ndim(W_PCT_RANK)\nmvp\nmvp=lm(Votes ~ ., data=nba[,relevant])\n\n#mvpPoly = lm(Votes ~ ., poly(nba[,relevant],3,raw=TRUE))\nmvpPoly = lm(Votes ~ poly(W_PCT_RANK,FGM_RANK, degree=2, raw=TRUE))\nmvPPG=lm(Votes ~ poly(PTS_RANK),2)\n#plot(Votes,PTS_RANK)\n#lines(predict(lm(Votes~factor+I(factor^2))))\nlibrary(ggplot2)\nqplot(PTS,Votes)+stat_smooth(method=\"lm\", formula=\"y~poly(x,3)\", se=FALSE)\nmvp <- lm(Votes ~ ., data=nba[, raw_stats]) \nmvp\nmvp.log <- glm(MVP ~ ., data=nba[,raw_stats], family=binomial)\nmvp.rank <- lm(Votes ~ ., data=nba[, rank_stats])\nsummary(mvp)\nsummary(mvp.log)\nsummary(mvp.rank)\nset.seed(1)\n\nlibrary(boot)\nLR2 = glm( MVP ~ poly( PTS, 2),family = binomial )\nLOOCV2 = cv.glm( nba, LR2 )\nLOOCV2$delta\n\nLR3 = glm( MVP ~ poly( PTS, 3),family = binomial )\nLOOCV3 = cv.glm( nba, LR3 )\nLOOCV3$delta\ninstall.packages(\"leaps\")\nlibrary( leaps )\nSS.raw = regsubsets( Votes ~ . , data = nba[,raw_stats], nvmax = 20 )\nsum.raw=summary(SS.raw)\nsum.raw\n\nSS.rank = regsubsets( Votes ~ . , data = nba[,rank_stats] )\nsum.rank=summary(SS.rank)\n\nsum.rank$cp\nwhich.min(sum.raw$cp)\nwhich.min(sum.rank$cp)\nmin_p.raw=which.min(sum.raw$cp)\nmin_p.rank=which.min(sum.rank$cp)\n\ncoef(SS.raw,min_p.raw)\ncoef(SS.rank,min_p.rank)\nsummary(sum.raw$rsq)\nz=which.min(sum.rank$cp)\n\nBSS_raw = regsubsets( MVP ~ . , data = nba[,raw_stats], nvmax = 19,\n                      method = \"backward\" )\nBSS_summary = summary( BSS_raw )\n# The rest of the lines are similar\nmin_BSS_raw = which.min( BSS_summary$cp )\ncoef( BSS_raw, min_BSS_raw )\nBSS_summary$adjr2\na=lm(Votes ~ PTS*W + PTS )\nsummary(a)\n\ninteractions <- model.matrix(~(PTS + W_PCT + FG_PCT + FG3_PCT + FT_PCT + REB + AST + TOV + STL + BLK + PTS + PLUS_MINUS + DD2 + TD3)^2,data=nba)\nattr(interactions,\"assign\")\n\ninteractions\nlm(Votes ~ interactions + ., data=nba[,raw_stats])\ndim(interactions)\nraw_interactions <- cbind(interactions,nba[,raw_stats])\ndim(raw_interactions)\ninteraction_matrix <- matrix(unlist(raw_interactions), ncol = 105, byrow = TRUE)\ninteractions_choice = regsubsets( Votes ~ interactions, data = nba, nvmax = 105, really.big=T)\n",
+    "created" : 1494710322045.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4141527265",
+    "id" : "AB3BD21D",
+    "lastKnownWriteTime" : 1494949896,
+    "last_content_update" : 1495047273238,
+    "path" : "~/Basketball/bballdata/Code/BBallR/finalCode.R",
+    "project_path" : "finalCode.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
